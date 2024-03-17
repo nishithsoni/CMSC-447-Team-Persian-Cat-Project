@@ -55,146 +55,63 @@
 
 <div class="d-flex justify-content-center">
     <form action="">
+        {% for i in range(5) %}
         <div class="row">
             <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
+                <input type="text" maxlength="1" class="form-control shadow-none text-uppercase text-center square-input" id="formGroupExampleInput" placeholder="" readonly>
             </div>
             <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
+                <input type="text" maxlength="1" class="form-control shadow-none text-uppercase text-center square-input" id="formGroupExampleInput" placeholder="" readonly>
             </div>
             <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
+                <input type="text" maxlength="1" class="form-control shadow-none text-uppercase text-center square-input" id="formGroupExampleInput" placeholder="" readonly>
             </div>
             <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
+                <input type="text" maxlength="1" class="form-control shadow-none text-uppercase text-center square-input" id="formGroupExampleInput" placeholder="" readonly>
             </div>
             <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
+                <input type="text" maxlength="1" class="form-control shadow-none text-uppercase text-center square-input" id="formGroupExampleInput" placeholder="" readonly>
             </div>
         </div>
-        <div class="row">
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-            <div class="col p-1">
-                <input type="text" class="form-control square-input" id="formGroupExampleInput" placeholder="">
-            </div>
-        </div>
+        {% endfor %}
     </form>
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-center mt-4">
     <div class="p-1 keyboard-letters">
-        <button type="button" class="btn btn-secondary">Q</button>
-        <button type="button" class="btn btn-secondary">W</button>
-        <button type="button" class="btn btn-secondary">E</button>
-        <button type="button" class="btn btn-secondary">R</button>
-        <button type="button" class="btn btn-secondary">T</button>
-        <button type="button" class="btn btn-secondary">Y</button>
-        <button type="button" class="btn btn-secondary">U</button>
-        <button type="button" class="btn btn-secondary">I</button>
-        <button type="button" class="btn btn-secondary">O</button>
-        <button type="button" class="btn btn-secondary">P</button>
+        <button type="button" class="btn btn-secondary letter-button">Q</button>
+        <button type="button" class="btn btn-secondary letter-button">W</button>
+        <button type="button" class="btn btn-secondary letter-button">E</button>
+        <button type="button" class="btn btn-secondary letter-button">R</button>
+        <button type="button" class="btn btn-secondary letter-button">T</button>
+        <button type="button" class="btn btn-secondary letter-button">Y</button>
+        <button type="button" class="btn btn-secondary letter-button">U</button>
+        <button type="button" class="btn btn-secondary letter-button">I</button>
+        <button type="button" class="btn btn-secondary letter-button">O</button>
+        <button type="button" class="btn btn-secondary letter-button">P</button>
     </div>
     <div class="p-1 keyboard-letters">
-        <button type="button" class="btn btn-secondary">A</button>
-        <button type="button" class="btn btn-secondary">S</button>
-        <button type="button" class="btn btn-secondary">D</button>
-        <button type="button" class="btn btn-secondary">F</button>
-        <button type="button" class="btn btn-secondary">G</button>
-        <button type="button" class="btn btn-secondary">H</button>
-        <button type="button" class="btn btn-secondary">J</button>
-        <button type="button" class="btn btn-secondary">K</button>
-        <button type="button" class="btn btn-secondary">L</button>
+        <button type="button" class="btn btn-secondary letter-button">A</button>
+        <button type="button" class="btn btn-secondary letter-button">S</button>
+        <button type="button" class="btn btn-secondary letter-button">D</button>
+        <button type="button" class="btn btn-secondary letter-button">F</button>
+        <button type="button" class="btn btn-secondary letter-button">G</button>
+        <button type="button" class="btn btn-secondary letter-button">H</button>
+        <button type="button" class="btn btn-secondary letter-button">J</button>
+        <button type="button" class="btn btn-secondary letter-button">K</button>
+        <button type="button" class="btn btn-secondary letter-button">L</button>
     </div>
     <div class="p-1 keyboard-letters">
-        <button type="button" class="btn btn-secondary special-key">ENTER</button>
-        <button type="button" class="btn btn-secondary">Z</button>
-        <button type="button" class="btn btn-secondary">X</button>
-        <button type="button" class="btn btn-secondary">C</button>
-        <button type="button" class="btn btn-secondary">V</button>
-        <button type="button" class="btn btn-secondary">B</button>
-        <button type="button" class="btn btn-secondary">N</button>
-        <button type="button" class="btn btn-secondary">M</button>
-        <button type="button" class="btn btn-secondary special-key backspace">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" class="w-5 h-5">
+        <button type="button" class="btn btn-secondary special-key letter-button">ENTER</button>
+        <button type="button" class="btn btn-secondary letter-button">Z</button>
+        <button type="button" class="btn btn-secondary letter-button">X</button>
+        <button type="button" class="btn btn-secondary letter-button">C</button>
+        <button type="button" class="btn btn-secondary letter-button">V</button>
+        <button type="button" class="btn btn-secondary letter-button">B</button>
+        <button type="button" class="btn btn-secondary letter-button">N</button>
+        <button type="button" class="btn btn-secondary letter-button">M</button>
+        <button type="button" class="btn btn-secondary special-key backspace  letter-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" class="">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
             </svg>
         </button>

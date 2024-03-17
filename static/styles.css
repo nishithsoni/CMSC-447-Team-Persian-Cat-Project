@@ -6,22 +6,23 @@
 }
 
 .square-input {
-  width: 60px;
-  height: 60px;
+  width: 52px;
+  height: 52px;
 }
 
 .keyboard-letters {
-  font-size: 30px;
 }
 
 .keyboard-letters button {
-  width: 60px;
-  height: 60px;
+  height: 42px;
+
+  padding: 8px;
+  table-layout: fixed;
 }
 
 .special-key {
-  width: 95px!important;
-  height: 60px;
+  width: 55px!important;
+  padding: 0px!important;
 }
 
 .backspace svg{
