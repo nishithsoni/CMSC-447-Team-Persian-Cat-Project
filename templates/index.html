@@ -3,6 +3,26 @@
 
 {% block body %}
 
+
+
+<div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+            <h1 class="modal-title fs-3" id="exampleModalLabel">Choose a Level</h1>
+        </div>
+        <div class="modal-body d-flex align-items-center justify-content-center">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button type="button" class="btn btn-outline-success btn-lg" data-bs-dismiss="modal" aria-label="Easy">Easy</button>
+                <button type="button" class="btn btn-outline-warning btn-lg" data-bs-dismiss="modal" aria-label="Medium">Medium</button>
+                <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal" aria-label="Hard">Hard</button>
+            </div>
+
+        </div>
+      </div>
+    </div>
+</div>
+
 <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"">
       <div class="modal-content">
@@ -55,7 +75,7 @@
 
 <div class="d-flex justify-content-center">
     <form action="">
-        {% for i in range(5) %}
+        {% for i in range(6) %}
         <div class="row">
             <div class="col p-1">
                 <input type="text" maxlength="1" class="form-control shadow-none text-uppercase text-center square-input" id="formGroupExampleInput" placeholder="" readonly>
@@ -117,5 +137,12 @@
         </button>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#levelModal').modal('show');
+    });
+</script>
+
 {% include "footer.html" %}
 {% endblock %}
