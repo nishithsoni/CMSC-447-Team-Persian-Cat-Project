@@ -8,16 +8,27 @@
 <div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header d-flex justify-content-center">
-            <h1 class="modal-title fs-3" id="exampleModalLabel">Choose a Level</h1>
-        </div>
-        <div class="modal-body d-flex align-items-center justify-content-center">
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button type="button" class="btn btn-outline-success btn-lg" data-bs-dismiss="modal" aria-label="Easy">Easy</button>
-                <button type="button" class="btn btn-outline-warning btn-lg" data-bs-dismiss="modal" aria-label="Medium">Medium</button>
-                <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal" aria-label="Hard">Hard</button>
+        <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+            <a class="navbar-brand mt-3 mb-3" href="#">
+                <img src="../static/letter-r.png" alt="Logo" width="50" height="50">
+              </a>
+            <h1 class="modal-title fs-2 fw-bold mb-2" id="exampleModalLabel">RetrieWordle</h1>
+            <h1 class="modal-title fs-2 fw-lighter mb-5" id="exampleModalLabel">Guess the 5-letter word.</h1>
+            <div class="input-group input-group-lg gap-1 mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="John Doe">
+                    <label for="floatingInput">Username</label>
+                  </div>
             </div>
-
+            <div class="btn-group btn-group-lg gap-1 mb-3" role="group" aria-label="Vertical radio toggle button group">
+                <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
+                <label class="btn btn-outline-success" for="vbtn-radio1">Easy</label>
+                <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
+                <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
+                <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
+                <label class="btn btn-outline-danger" for="vbtn-radio3">Hard</label>
+            </div>
+            <button type="button" class="btn btn-lg btn-primary">Play</button>
         </div>
       </div>
     </div>
