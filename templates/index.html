@@ -152,6 +152,10 @@
 <script>
     $(document).ready(function(){
         $('#levelModal').modal('show');
+    
+        $('#levelModal').on('hidden.bs.modal', function () {
+            $('#questionModal').modal('show');
+        });
     });
 </script>
 
