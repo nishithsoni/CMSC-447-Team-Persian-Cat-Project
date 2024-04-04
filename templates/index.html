@@ -28,7 +28,7 @@
                 <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
                 <label class="btn btn-outline-danger" for="vbtn-radio3">Hard</label>
             </div>
-            <button type="button" class="btn btn-lg btn-primary">Play</button>
+            <button type="submit" class="btn btn-lg btn-primary">Play</button>
         </div>
       </div>
     </div>
@@ -152,6 +152,23 @@
 <script>
     $(document).ready(function(){
         $('#levelModal').modal('show');
+
+    $(document).ready(function(){
+        $('#levelForm').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '/save_username',  // the endpoint
+                type: 'POST',  // http method
+                data: $(this).serialize(),  // data sent with the post request
+                success: function(response) {
+                    // handle the response from the server
+                },
+                error: function(error) {
+                    // handle errors
+                }
+            });
+        });
+    });
     
         $('#levelModal').on('hidden.bs.modal', function () {
             $('#questionModal').modal('show');
