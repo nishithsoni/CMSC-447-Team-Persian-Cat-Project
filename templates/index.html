@@ -163,16 +163,25 @@
         guesses.push("");
     }
 
-    function inputLetter(input) {
-        if (input.key == "Backspace") {
+    function keyboardHandler(input) {
+        inputLetter(input.key.toLowerCase());
+    }
+
+    function buttonHandler(event) {
+        inputLetter(event.currentTarget.textContent.toLowerCase());
+    }
+
+    function inputLetter(key) {
+        if (key == "backspace") {
             guesses[currGuess] = guesses[currGuess].slice(0, -1);
         }
         else if(guesses[currGuess].length < numLetters) {
-            guesses[currGuess] += input.key;
+            guesses[currGuess] += key;
         }
-        else if(input.key == "Enter") {
+        else if(key == "enter" && currGuess < numGuesses) {
             currGuess++;
         }
+        updateLetters();
     }
 
     function updateLetters() {
@@ -190,9 +199,20 @@
             }
         }
     }
-    
-    addEventListener("keydown", inputLetter);
-    addEventListener("keydown", updateLetters);
+    function testFunc(event) {
+        //console.log("button pressed");
+        console.log(event.currentTarget.textContent);
+    }
+
+    addEventListener("keydown", keyboardHandler);
+    //addEventListener("keydown", updateLetters);
+
+    let letterButtons = document.getElementsByClassName("letter-button");
+    //letterButtons.onclick = testFunc;
+    for(let i = 0; i < letterButtons.length; i++) {
+        //letterButtons[i].onclick = testFunc;
+        letterButtons[i].addEventListener("click", buttonHandler);
+    }
 </script>
 
 {% include "footer.html" %}
