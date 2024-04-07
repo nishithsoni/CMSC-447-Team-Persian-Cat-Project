@@ -9,6 +9,12 @@ WORDS = 'words.db'
 conn = sqlite3.connect(WORDS)
 c = conn.cursor()
 
+# Create the table for the guessable words
+c.execute("""CREATE TABLE IF NOT EXISTS guessable_words (word TEXT NOT NULL)""")
+
+# Create the table 'answer_words' in words.db to hold on the valid answer words
+c.execute("""CREATE TABLE IF NOT EXISTS answer_words (word TEXT NOT NULL)""")
+
 # Clear the tables so that duplicates don't get loaded into each word table every time the app is refreshed
 c.execute("DELETE FROM guessable_words")
 c.execute("DELETE FROM answer_words")
@@ -18,12 +24,6 @@ with open('guessable_words.txt') as f:
 
 with open('answer_words.txt') as f:
     answer_words = [word.strip() for word in f.readlines()]
-
-# Create the table for the guessable words
-c.execute("""CREATE TABLE IF NOT EXISTS guessable_words (word TEXT NOT NULL)""")
-
-# Create the table 'answer_words' in words.db to hold on the valid answer words
-c.execute("""CREATE TABLE IF NOT EXISTS answer_words (word TEXT NOT NULL)""")
 
 # Insert the words into the guessable_words table in words.db
 c.executemany("""INSERT INTO guessable_words (word) VALUES (?)""", [(word,) for word in guessable_words])
