@@ -245,7 +245,7 @@
                     }
                 } else {
                     finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
-                    console.log(currGuess)
+                    console.log("User has submitted their final guess.");
                 }
             } else if (input.key === "Backspace") {
                 if (currGuess < numGuesses - 1 || !finalSubmit) { // Checks if the player has submitted their last guess
@@ -275,7 +275,7 @@
                 }
             } else {
                 finalSubmit = true;
-                console.log(currGuess)
+                console.log("User has submitted their final guess.");
             }
         } else if (button.classList.contains("backspace")) {
             // Handle the "BACKSPACE" button
