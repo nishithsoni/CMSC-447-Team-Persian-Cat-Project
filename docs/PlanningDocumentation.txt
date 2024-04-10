@@ -1,30 +1,35 @@
 Sprint 2 Planning Documentation
-
 Team Persian Cat
-Overview
-In Sprint 2 our team focused on a combination of technical and user experience improvements to further develop our interactive word game. The sprint was dedicated to implementing critical game mechanics, refining the game's interactivity, and laying the groundwork for an adaptable, engaging user experience.
-Objectives
-Enhancing User Interaction: Implementation of a more user-friendly and interactive UI.
-Data Collection: Gathering a list of usable words for game answers and a separate list for guessable words.
-Database Integration: Development of a solid framework for the storage and retrieval of words.
-GamePlay Logic: Improving the fundamental rules of the game to make it more difficult and interesting for players to play, with attention to word selection and input validation mechanisms.
-User Interaction Improvement: Implementation of a direct interaction approach that connects the physical keyboard to the Wordle UI on screen.
-Difficulty Adjustment: A difficulty-based attempt system has been implemented to cater to a wide range of players.
-Main Developments
-Adding User Interface Components
-Play Button Integration: Add a play button to start the game, making it easier for users to enter.
 
-Difficulty level selection: Allowing players to choose increasing difficulty levels by providing them buttons to choose them. This will enable the player to start playing the game with a varied number of guesses (the lower the number of guesses, the more difficult the game).
-Keyboard Integration: Provide players the option of using the real keyboard as well. Also, making sure the user's keyboard is mapped to the on-screen letters so that gameplay runs smoothly.
-Database Functionality
-Word List Management: Developed a thorough system for managing the list of words, including tools for saving and loading words to and from the database. This system serves as the foundation for the game's content.
-Random Word Selection Logic: Implemented an algorithm to choose a word at random from the database for every gaming round. This feature is necessary for maintaining gameplay variability and unpredictability, which increases the game's difficulty.
-Game Mechanics and Logic
-Letter Matching Algorithm: Compares the player's guesses with the correct answer in real-time, giving them feedback on how accurate their guesses were (shown by green, yellow, or no color). This feedback system provides immediate insight into the player's progress and is essential to the gameplay.
-Difficulty Settings
-Attempt Numbers: Created a dynamic system that links game difficulty to the total number of attempts. This is permitted by modifying the number of attempts based on preset difficulty levels. This method makes it possible to provide a personalized gaming experience for players of various skill levels.
+**Overview**
+In Sprint 2 our team focused on a combination of technical and user experience improvements to further develop our interactive word game. The sprint was dedicated to implementing critical game mechanics, refining the game's interactivity, and laying the groundwork for an adaptable, engaging user experience.
+
+**Objectives**
+- Enhancing User Interaction: Implementation of a more user-friendly and interactive UI.
+- Data Collection: Gathering a list of usable words for game answers and a separate list for guessable words.
+- Database Integration: Development of a solid framework for the storage and retrieval of words.
+- GamePlay Logic: Improving the fundamental rules of the game to make it more difficult and interesting for players to play, with attention to word selection and input validation mechanisms.
+- User Interaction Improvement: Implementation of a direct interaction approach that connects the physical keyboard to the Wordle UI on screen.
+- Difficulty Adjustment: A difficulty-based attempt system has been implemented to cater to a wide range of players.
+
+**Main Developments**
+*Adding User Interface Components*
+- Play Button Integration: Add a play button to start the game, making it easier for users to enter.
+- Difficulty level selection: Allowing players to choose increasing difficulty levels by providing them buttons to choose them. This will enable the player to start playing the game with a varied number of guesses (the lower the number of guesses, the more difficult the game).
+- Keyboard Integration: Provide players the option of using the real keyboard as well. Also, making sure the user's keyboard is mapped to the on-screen letters so that gameplay runs smoothly.
+
+*Database Functionality*
+- Word List Management: Developed a thorough system for managing the list of words, including tools for saving and loading words to and from the database. This system serves as the foundation for the game's content.
+- Random Word Selection Logic: Implemented an algorithm to choose a word at random from the database for every gaming round. This feature is necessary for maintaining gameplay variability and unpredictability, which increases the game's difficulty.
+
+*Game Mechanics and Logic*
+- Letter Matching Algorithm: Compares the player's guesses with the correct answer in real-time, giving them feedback on how accurate their guesses were (shown by green, yellow, or no color). This feedback system provides immediate insight into the player's progress and is essential to the gameplay.
+
+*Difficulty Settings*
+- Attempt Numbers: Created a dynamic system that links game difficulty to the total number of attempts. This is permitted by modifying the number of attempts based on preset difficulty levels. This method makes it possible to provide a personalized gaming experience for players of various skill levels.
 Easy: 6 attempts
 Medium: 5 attempts
 Hard: 4 attempts or fewer
-Conclusion
+
+**Conclusion**
 During Sprint 2, the development of our word game has advanced significantly in terms of user experience, engagement strategies, and game functionality. By improving the UI and game logic and offering customized gaming options, we have created a strong framework for future development and user satisfaction. We will keep building on this project as we move forward, and look for ways to improve the gaming experience.
