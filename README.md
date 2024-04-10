@@ -17,4 +17,4 @@
 6. Then, either using your actual keyboard or the UI keyboard, try your hand at guessing the secret 5-letter word! As of now, you only have 6 attempts.
 
 *Important Info:* 
-####As of now, the winning-game logic and the coloration of the keyboard to indicate whether the letters within your guess are wrong/within the word/correct is yet to be implemented. This will be fully functional by the end of Sprint 3).
+##### As of now, the winning-game logic and the coloration of the keyboard to indicate whether the letters within your guess are wrong/within the word/correct is yet to be implemented. This will be fully functional by the end of Sprint 3).
