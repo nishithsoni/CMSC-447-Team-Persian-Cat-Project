@@ -18,4 +18,4 @@
 
 
 *Important Info:* 
-##### As of now, the winning-game logic and the coloration of the keyboard to indicate whether the letters within your guess are wrong/within the word/correct is yet to be implemented. This will be fully functional by the end of Sprint 3).
+##### *As of now, the winning-game logic and the coloration of the keyboard to indicate whether the letters within your guess are wrong/within the word/correct is yet to be implemented. This will be fully functional by the end of Sprint 3.*
