@@ -2,7 +2,7 @@
 ## Sprint 2: RetrieWordle
 
 ### How to run our game:
-1. Open an IDE (we used Visual Studio Code) and travel to the directory that contains our code files
+1. Open an IDE (we used Visual Studio Code) and travel to the directory that contains our code files.
 
 2. Run the app.py file first. Upon success, you should now be locally hosting our game at 127.0.0.1:5000 (or wherever you tend to host it, look at the output messages just to make sure). You should see a message like this:
 ![image](https://github.com/nishithsoni/cmsc447-sp2024-TeamPersianCat/assets/145214848/311b88f5-844d-477e-8f76-affcf263defa)
