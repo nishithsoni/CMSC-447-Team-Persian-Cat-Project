@@ -240,7 +240,7 @@
         } else {
             if (input.key === "Enter") {
                 if (currGuess < numGuesses - 1) {
-                    if (guesses[currGuess].length === numLetters) {
+                    if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                         currGuess++;
                     }
                 } else {
@@ -270,7 +270,7 @@
         if (button.textContent === "ENTER") {
             // Handle the "ENTER" button
             if (currGuess < numGuesses - 1) {
-                if (guesses[currGuess].length === numLetters) {
+                if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                     currGuess++;
                 }
             } else {
