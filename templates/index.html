@@ -3,8 +3,6 @@
 
 {% block body %}
 
-
-
 <div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -28,6 +26,8 @@
                     <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
                     <label class="btn btn-outline-danger" for="vbtn-radio3">Hard</label>
+                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="vbtn-radio4">Impossible</label>
                 </div>
                 <button type="submit" class="btn btn-lg btn-primary" id="playButton">Play</button>
             </div>
@@ -43,7 +43,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <h5>Guess the Wordle in 6 tries.</h5>
+            <h5>Guess the Wordle in {{ numGuesses }} tries.</h5>
             <ul>
                 <li>Each guess must be a valid 5-letter word.</li>
                 <li>The color of the tiles will change to show how close your guess was to the word.</li>
@@ -85,38 +85,35 @@
 </div>
 </div>
 
-<div class="d-flex justify-content-center">
-    <form action="">
-        {% for i in range(6) %}
-        <div class="row">
-            <div class="col p-1">
-                <input type="text" maxlength="1"
-                    class="form-control shadow-none text-uppercase text-center bg-dark square-input"
-                    id="formGroupExampleInput" placeholder="" disabled readonly>
+<div id="board">
+    <div class="d-flex justify-content-center">
+        <form action="">
+            {% for i in range(numGuesses) %}
+            <div class="row">
+                <div class="col p-1">
+                    <input type="text" maxlength="1"
+                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                </div>
+                <div class="col p-1">
+                    <input type="text" maxlength="1"
+                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                </div>
+                <div class="col p-1">
+                    <input type="text" maxlength="1"
+                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                </div>
+                <div class="col p-1">
+                    <input type="text" maxlength=""
+                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                </div>
+                <div class="col p-1">
+                    <input type="text" maxlength="1"
+                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                </div>
             </div>
-            <div class="col p-1">
-                <input type="text" maxlength="1"
-                    class="form-control shadow-none text-uppercase text-center bg-dark square-input"
-                    id="formGroupExampleInput" placeholder="" disabled readonly>
-            </div>
-            <div class="col p-1">
-                <input type="text" maxlength="1"
-                    class="form-control shadow-none text-uppercase text-center bg-dark square-input"
-                    id="formGroupExampleInput" placeholder="" disabled readonly>
-            </div>
-            <div class="col p-1">
-                <input type="text" maxlength="1"
-                    class="form-control shadow-none text-uppercase text-center bg-dark square-input"
-                    id="formGroupExampleInput" placeholder="" disabled readonly>
-            </div>
-            <div class="col p-1">
-                <input type="text" maxlength="1"
-                    class="form-control shadow-none text-uppercase text-center bg-dark square-input"
-                    id="formGroupExampleInput" placeholder="" disabled readonly>
-            </div>
-        </div>
-        {% endfor %}
-    </form>
+            {% endfor %}
+        </form>
+    </div>
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-center mt-4">
@@ -163,68 +160,132 @@
 </div>
 
 <script>
-    var isModalOpen = false; // Set to false initially
-    $(document).ready(function () {
-        $('#levelModal').modal('show');
-
-        // When the modal is shown, set isModalOpen to true
-        $('#levelModal').on('shown.bs.modal', function () {
-            isModalOpen = true;
-        });
-
-        // When the modal is hidden, set isModalOpen to false
-        $('#levelModal').on('hidden.bs.modal', function () {
-            isModalOpen = false;
-        });
-
-        $('#levelForm').on('submit', function (event) {
-            event.preventDefault();
-            $.ajax({
-                url: '/save_username',  // the endpoint
-                type: 'POST',  // http method
-                data: $(this).serialize(),  // data sent with the post request
-                success: function (response) {
-                    // handle the response from the server
-                },
-                error: function (error) {
-                    // handle errors
-                }
-            });
-        });
-
-        $('#levelModal').on('hidden.bs.modal', function () {
-            $('#questionModal').modal('show');
-        });
-    });
-
-    // Setup
     let guessableWords;
     let answerWords;
     let randomAnswer;
 
-    async function loadWords() {
-        // Fetch the guessable words
-        let response = await fetch('/guessable_words');
-        let data = await response.json();
-        guessableWords = data;
-        console.log('Guessable words:', guessableWords);
+    // Read the guessable words from a text file
+    fetch('../static/guessable_words.txt')
+        .then(response => response.text())
+        .then(data => {
+            guessableWords = data.split('\n');
+            console.log('Guessable words:', guessableWords);
+        })
+        .catch(error => {
+            console.error('Error reading guessable words:', error);
+        });
 
-        // Fetch the answer words
-        response = await fetch('/answer_words');
-        data = await response.json();
-        answerWords = data;
-        console.log('Answer words:', answerWords);
+    // Read the answer words from a text file
+    fetch('../static/answer_words.txt')
+        .then(response => response.text())
+        .then(data => {
+            answerWords = data.split('\n');
+            console.log('Answer words:', answerWords);
+            // Choose a random answer
+            let randomIndex = Math.floor(Math.random() * answerWords.length);
+            randomAnswer = answerWords[randomIndex];
+            console.log('Chosen Answer:', randomAnswer);
+        })
+        .catch(error => {
+            console.error('Error reading answer words:', error);
+        });
+    
+    let numGuesses = 7;
 
-        // Choose a random answer
-        let randomIndex = Math.floor(Math.random() * answerWords.length);
-        randomAnswer = answerWords[randomIndex];
-        console.log('Chosen Answer:', randomAnswer);
-    }
+    $(document).ready(function () {
+        $('#levelModal').modal('show');
 
-    // fetches the words from word.db, places them into the guessableWords and answerWords arrays, and chooses a random answer
-    loadWords();
+        // dont let close modal until username is entered, show alert
+        $('#levelModal').on('hide.bs.modal', function (e) {
+            if ($('#floatingInput').val() === "") {
+                e.preventDefault();
+            }
+        });
 
-    const numGuesses = 6;
+        // When the modal is hidden, set isModalOpen to false
+        $('#levelModal').on('hidden.bs.modal', function () {
+            $('#questionModal').modal('show');
+        });
+
+        // get level modal input and save username and level
+        $('#playButton').click(function () {
+            let username = $('#floatingInput').val();
+            if (username === "") {
+                alert("Please enter a username.");
+                return;
+            }
+            else if (username.length > 20) {
+                alert("Username must be less than 20 characters.");
+                return;
+            }
+
+            let level = $('input[name="vbtn-radio"]:checked').next().text();
+            if (level === "Easy") {
+                numGuesses = 7;
+            } else if (level === "Medium") {
+                numGuesses = 6;
+            } else if (level === "Hard") {
+                numGuesses = 5;
+            } else if (level === "Impossible") {
+                numGuesses = 3;
+            }
+            
+            // save username to leaderboard db if it doesn't exist and save level
+            $.ajax({
+                type: "POST",
+                url: "/save_username",
+                data: {
+                    'username': username,
+                    'level': level
+                },
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+            
+            console.log("Username:", username);
+            console.log("Level:", level);
+            $('#levelModal').modal('hide');
+            $('#questionModal .modal-body h5').text(`Guess the Wordle in ${numGuesses} tries.`);
+
+            // Generate the HTML for the board
+            let html = '';
+            for (let i = 0; i < numGuesses; i++) {
+                html += `
+                <div class="d-flex justify-content-center">
+                    <form action="">
+                        <div class="row">
+                            <div class="col p-1">
+                                <input type="text" maxlength="1"
+                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                            </div>
+                            <div class="col p-1">
+                                <input type="text" maxlength="1"
+                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                            </div>
+                            <div class="col p-1">
+                                <input type="text" maxlength="1"
+                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                            </div>
+                            <div class="col p-1">
+                                <input type="text" maxlength=""
+                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                            </div>
+                            <div class="col p-1">
+                                <input type="text" maxlength="1"
+                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                `;
+            }
+
+            // Replace the contents of the form with the new HTML
+            $('#board').html(html);
+        });
+    });
+
     const numLetters = 5;
     let guesses = [];
     let currGuess = 0;
@@ -235,7 +296,8 @@
 
     function keyboardHandler(input) {
         // Check if the key is "Enter" or "Backspace"
-        if (isModalOpen) {
+        // If any modal is open, ignore the key press
+        if ($('#levelModal').hasClass('show') || $('#questionModal').hasClass('show') || $('#leaderboardModal').hasClass('show') || $('#settingsModal').hasClass('show')) {
             return;
         } else {
             if (input.key === "Enter") {
