@@ -21,7 +21,7 @@
                 <div class="btn-group btn-group-lg gap-1 mb-3" role="group"
                     aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" for="vbtn-radio1">Easy</label>
+                    <label class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="7 guesses" data-trigger="hover" for="vbtn-radio1">Easy</label>
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
                     <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
@@ -160,6 +160,9 @@
 </div>
 
 <script>
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
     let guessableWords;
     let answerWords;
     let randomAnswer;
@@ -254,7 +257,7 @@
                 html += `
                 <div class="d-flex justify-content-center">
                     <form action="">
-                        <div class="row">
+                        <div class="row" id="row${i}">
                             <div class="col p-1">
                                 <input type="text" maxlength="1"
                                     class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
@@ -301,31 +304,84 @@
             return;
         } else {
             if (input.key === "Enter") {
-                if (currGuess < numGuesses - 1) {
+                if (currGuess < numGuesses) {
                     if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
-                        //currGuess++;
                         if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
-                            console.log("Correct guess! The word was:", randomAnswer);
+                            // go through each letter and change the color to green
+                            for (let i = 0; i < numLetters; i++) {
+                                let letterBoxes = document.getElementsByClassName("square-input");
+                                letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
+                                letterBoxes[currGuess * numLetters + i].classList.add("border-success");
+                            }
+
+                            let alert = $('<div class="alert alert-success fade show text-center" role="alert">')
+                                .text('Congratulations!');
+                            
+                            // Add the alert to the DOM
+                            $('body').prepend(alert);
+                            setTimeout(function() {
+                                alert.alert('close');
+                            }, 1500);
                             finalSubmit = true;
                         } else {
-                            console.log("It's a valid word, but not the correct answer.");
+                            // go through each letter input and match with the answer and change input box colors
+                            let answer = randomAnswer.toLowerCase();
+                            let guess = guesses[currGuess].toLowerCase();
+                            let letterBoxes = document.getElementsByClassName("square-input");
+
+                            let answerCopy = [...answer];
+
+                            for (let i = 0; i < numLetters; i++) {
+                                if (guess[i] === answer[i]) {
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("border-success");
+
+                                    // Remove the matched letter from the answer copy
+                                    answerCopy[i] = null;
+                                }
+                            }
+
+                            for (let i = 0; i < numLetters; i++) {
+                                if (guess[i] !== answer[i] && answerCopy.includes(guess[i])) {
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-warning");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("border-warning");
+
+                                    // Remove the matched letter from the answer copy
+                                    answerCopy[answerCopy.indexOf(guess[i])] = null;
+                                } else if (guess[i] !== answer[i]) {
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-secondary");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("border-secondary");
+                                }
+                            }
                             currGuess++;
                         }
-                    } else {
-                        console.log("Invalid guess. Please enter a valid 5-letter word.");
-                    }
-                } else {
-                    if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
-                        if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
-                            console.log("Correct guess! The word was:", randomAnswer);
-                            finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
-                        } else {
-                            console.log("It's a valid word, but not the correct answer.");
-                            finalSubmit = true;
+                    } 
+                    else {
+                        if (guesses[currGuess].length < numLetters) {
+                            let alert = $('<div class="alert alert-light fade show text-center" role="alert">')
+                                .text('Not enough letters.');
+
+                            // Add the alert to the DOM
+                            $('body').prepend(alert);
+                            // Remove the alert after 3 seconds
+                            setTimeout(function() {
+                                alert.alert('close');
+                            }, 1500);
                         }
-                    } else {
-                        console.log("Invalid guess. Please enter a valid 5-letter word.");
-                    }
+                        else if (!guessableWords.includes(guesses[currGuess])) {
+                            let alert = $('<div class="alert alert-light fade show text-center" role="alert">')
+                                .text('Not in word list.');
+                            
+                            $('body').prepend(alert);
+                            setTimeout(function() {
+                                alert.alert('close');
+                            }, 1500);
+                        }
+                    } 
                 }
             } else if (input.key === "Backspace") {
                 if (currGuess < numGuesses - 1 || !finalSubmit) { // Checks if the player has submitted their last guess
@@ -423,6 +479,8 @@
         //letterButtons[i].onclick = testFunc;
         letterButtons[i].addEventListener("click", buttonHandler);
     }
+
+
 </script>
 
 {% include "footer.html" %}
