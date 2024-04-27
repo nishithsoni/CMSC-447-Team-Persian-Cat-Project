@@ -160,41 +160,7 @@
 </div>
 
 <script>
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-
-    let guessableWords;
-    let answerWords;
-    let randomAnswer;
-
-    // Read the guessable words from a text file
-    fetch('../static/guessable_words.txt')
-        .then(response => response.text())
-        .then(data => {
-            guessableWords = data.split('\n');
-            console.log('Guessable words:', guessableWords);
-        })
-        .catch(error => {
-            console.error('Error reading guessable words:', error);
-        });
-
-    // Read the answer words from a text file
-    fetch('../static/answer_words.txt')
-        .then(response => response.text())
-        .then(data => {
-            answerWords = data.split('\n');
-            console.log('Answer words:', answerWords);
-            // Choose a random answer
-            let randomIndex = Math.floor(Math.random() * answerWords.length);
-            randomAnswer = answerWords[randomIndex];
-            console.log('Chosen Answer:', randomAnswer);
-        })
-        .catch(error => {
-            console.error('Error reading answer words:', error);
-        });
-    
-    let numGuesses = 7;
-
+    var isModalOpen = false; // Set to false initially
     $(document).ready(function () {
         $('#levelModal').modal('show');
 
@@ -286,6 +252,16 @@
 
             // Replace the contents of the form with the new HTML
             $('#board').html(html);
+                    // handle the response from the server
+                },
+                error: function (error) {
+                    // handle errors
+                }
+            });
+        });
+
+        $('#levelModal').on('hidden.bs.modal', function () {
+            $('#questionModal').modal('show');
         });
     });
 
@@ -357,6 +333,8 @@
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-secondary");
                                 }
                             }
+                            console.log("It's a valid word, but not the correct answer.");
+                            updateColors();
                             currGuess++;
                         }
                     } 
@@ -382,6 +360,23 @@
                             }, 1500);
                         }
                     } 
+                    } else {
+                        console.log("Invalid guess. Please enter a valid 5-letter word.");
+                    }
+                } else { // This block of code runs whenever the user is on their last guess
+                    if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
+                        if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
+                            console.log("Correct guess! The word was:", randomAnswer);
+                            finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
+                            updateColors();
+                        } else {
+                            console.log("It's a valid word, but not the correct answer. User has submitted their last guess.");
+                            finalSubmit = true;
+                            updateColors();
+                        }
+                    } else {
+                        console.log("Invalid guess. Please enter a valid 5-letter word.");
+                    }
                 }
             } else if (input.key === "Backspace") {
                 if (currGuess < numGuesses - 1 || !finalSubmit) { // Checks if the player has submitted their last guess
