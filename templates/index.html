@@ -224,14 +224,13 @@
                 if (currGuess < numGuesses - 1) {
                     if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                         currGuess++;
-                    } else
-                    {
+                    } else {
                         console.log("Invalid guess. Please enter a valid 5-letter word.");
                     }
                 } else {
                     if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                         finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
-                    console.log("User has submitted their final guess.");
+                        console.log("User has submitted their final guess.");
                     } else {
                         console.log("Invalid guess. Please enter a valid 5-letter word.");
                     }
@@ -261,10 +260,16 @@
             if (currGuess < numGuesses - 1) {
                 if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                     currGuess++;
+                } else {
+                    console.log("Invalid guess. Please enter a valid 5-letter word.");
                 }
             } else {
-                finalSubmit = true;
-                console.log("User has submitted their final guess.");
+                if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
+                    finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
+                    console.log("User has submitted their final guess.");
+                } else {
+                    console.log("Invalid guess. Please enter a valid 5-letter word.");
+                }
             }
         } else if (button.classList.contains("backspace")) {
             // Handle the "BACKSPACE" button
@@ -300,7 +305,7 @@
             }
         }
     }
-    
+
     function testFunc(event) {
         //console.log("button pressed");
         console.log(event.currentTarget.textContent);
