@@ -3,6 +3,8 @@
 
 {% block body %}
 
+
+
 <div class="modal fade" id="levelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -26,8 +28,6 @@
                     <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
                     <label class="btn btn-outline-danger" for="vbtn-radio3">Hard</label>
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="vbtn-radio4">Impossible</label>
                 </div>
                 <button type="submit" class="btn btn-lg btn-primary" id="playButton">Play</button>
             </div>
@@ -43,7 +43,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <h5>Guess the Wordle in {{ numGuesses }} tries.</h5>
+            <h5>Guess the Wordle in 6 tries.</h5>
             <ul>
                 <li>Each guess must be a valid 5-letter word.</li>
                 <li>The color of the tiles will change to show how close your guess was to the word.</li>
@@ -85,71 +85,56 @@
 </div>
 </div>
 
-<div id="board">
-    <div class="d-flex justify-content-center">
-        <form action="">
-            {% for i in range(numGuesses) %}
-            <div class="row">
-                <div class="col p-1">
-                    <input type="text" maxlength="1"
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                </div>
-                <div class="col p-1">
-                    <input type="text" maxlength="1"
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                </div>
-                <div class="col p-1">
-                    <input type="text" maxlength="1"
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                </div>
-                <div class="col p-1">
-                    <input type="text" maxlength=""
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                </div>
-                <div class="col p-1">
-                    <input type="text" maxlength="1"
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                </div>
+<div class="d-flex justify-content-center">
+    <form action="">
+        {% for i in range(6) %}
+        <div class="row" id="row-{{ i }}">
+            {% for j in range(5) %}
+            <div class="col p-1">
+                <input type="text" maxlength="1"
+                    class="form-control shadow-none text-uppercase text-center bg-dark square-input letter-button"
+                    id="letter-{{ i }}-{{ j }}" placeholder="" disabled readonly>
             </div>
             {% endfor %}
-        </form>
-    </div>
+        </div>
+        {% endfor %}
+    </form>
 </div>
 
 <div class="d-flex flex-column justify-content-center align-items-center mt-4">
     <div class="p-1 keyboard-letters">
-        <button type="button" class="btn btn-secondary letter-button">Q</button>
-        <button type="button" class="btn btn-secondary letter-button">W</button>
-        <button type="button" class="btn btn-secondary letter-button">E</button>
-        <button type="button" class="btn btn-secondary letter-button">R</button>
-        <button type="button" class="btn btn-secondary letter-button">T</button>
-        <button type="button" class="btn btn-secondary letter-button">Y</button>
-        <button type="button" class="btn btn-secondary letter-button">U</button>
-        <button type="button" class="btn btn-secondary letter-button">I</button>
-        <button type="button" class="btn btn-secondary letter-button">O</button>
-        <button type="button" class="btn btn-secondary letter-button">P</button>
+        <button type="button" class="btn btn-secondary letter-button" id="Q">Q</button>
+        <button type="button" class="btn btn-secondary letter-button" id="W">W</button>
+        <button type="button" class="btn btn-secondary letter-button" id="E">E</button>
+        <button type="button" class="btn btn-secondary letter-button" id="R">R</button>
+        <button type="button" class="btn btn-secondary letter-button" id="T">T</button>
+        <button type="button" class="btn btn-secondary letter-button" id="Y">Y</button>
+        <button type="button" class="btn btn-secondary letter-button" id="U">U</button>
+        <button type="button" class="btn btn-secondary letter-button" id="I">I</button>
+        <button type="button" class="btn btn-secondary letter-button" id="O">O</button>
+        <button type="button" class="btn btn-secondary letter-button" id="P">P</button>
     </div>
     <div class="p-1 keyboard-letters">
-        <button type="button" class="btn btn-secondary letter-button">A</button>
-        <button type="button" class="btn btn-secondary letter-button">S</button>
-        <button type="button" class="btn btn-secondary letter-button">D</button>
-        <button type="button" class="btn btn-secondary letter-button">F</button>
-        <button type="button" class="btn btn-secondary letter-button">G</button>
-        <button type="button" class="btn btn-secondary letter-button">H</button>
-        <button type="button" class="btn btn-secondary letter-button">J</button>
-        <button type="button" class="btn btn-secondary letter-button">K</button>
-        <button type="button" class="btn btn-secondary letter-button">L</button>
+        <button type="button" class="btn btn-secondary letter-button" id="A">A</button>
+        <button type="button" class="btn btn-secondary letter-button" id="S">S</button>
+        <button type="button" class="btn btn-secondary letter-button" id="D">D</button>
+        <button type="button" class="btn btn-secondary letter-button" id="F">F</button>
+        <button type="button" class="btn btn-secondary letter-button" id="G">G</button>
+        <button type="button" class="btn btn-secondary letter-button" id="H">H</button>
+        <button type="button" class="btn btn-secondary letter-button" id="J">J</button>
+        <button type="button" class="btn btn-secondary letter-button" id="K">K</button>
+        <button type="button" class="btn btn-secondary letter-button" id="L">L</button>
     </div>
     <div class="p-1 keyboard-letters">
-        <button type="button" class="btn btn-secondary special-key letter-button">ENTER</button>
-        <button type="button" class="btn btn-secondary letter-button">Z</button>
-        <button type="button" class="btn btn-secondary letter-button">X</button>
-        <button type="button" class="btn btn-secondary letter-button">C</button>
-        <button type="button" class="btn btn-secondary letter-button">V</button>
-        <button type="button" class="btn btn-secondary letter-button">B</button>
-        <button type="button" class="btn btn-secondary letter-button">N</button>
-        <button type="button" class="btn btn-secondary letter-button">M</button>
-        <button type="button" class="btn btn-secondary special-key backspace  letter-button">
+        <button type="button" class="btn btn-secondary special-key letter-button" id="enter">ENTER</button>
+        <button type="button" class="btn btn-secondary letter-button" id="Z">Z</button>
+        <button type="button" class="btn btn-secondary letter-button" id="X">X</button>
+        <button type="button" class="btn btn-secondary letter-button" id="C">C</button>
+        <button type="button" class="btn btn-secondary letter-button" id="V">V</button>
+        <button type="button" class="btn btn-secondary letter-button" id="B">B</button>
+        <button type="button" class="btn btn-secondary letter-button" id="N">N</button>
+        <button type="button" class="btn btn-secondary letter-button" id="M">M</button>
+        <button type="button" class="btn btn-secondary special-key backspace letter-button" id="backspace">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.25"
                 stroke="currentColor" class="">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -160,132 +145,68 @@
 </div>
 
 <script>
-    let guessableWords;
-    let answerWords;
-    let randomAnswer;
-
-    // Read the guessable words from a text file
-    fetch('../static/guessable_words.txt')
-        .then(response => response.text())
-        .then(data => {
-            guessableWords = data.split('\n');
-            console.log('Guessable words:', guessableWords);
-        })
-        .catch(error => {
-            console.error('Error reading guessable words:', error);
-        });
-
-    // Read the answer words from a text file
-    fetch('../static/answer_words.txt')
-        .then(response => response.text())
-        .then(data => {
-            answerWords = data.split('\n');
-            console.log('Answer words:', answerWords);
-            // Choose a random answer
-            let randomIndex = Math.floor(Math.random() * answerWords.length);
-            randomAnswer = answerWords[randomIndex];
-            console.log('Chosen Answer:', randomAnswer);
-        })
-        .catch(error => {
-            console.error('Error reading answer words:', error);
-        });
-    
-    let numGuesses = 7;
-
+    var isModalOpen = false; // Set to false initially
     $(document).ready(function () {
         $('#levelModal').modal('show');
 
-        // dont let close modal until username is entered, show alert
-        $('#levelModal').on('hide.bs.modal', function (e) {
-            if ($('#floatingInput').val() === "") {
-                e.preventDefault();
-            }
+        // When the modal is shown, set isModalOpen to true
+        $('#levelModal').on('shown.bs.modal', function () {
+            isModalOpen = true;
         });
 
         // When the modal is hidden, set isModalOpen to false
         $('#levelModal').on('hidden.bs.modal', function () {
-            $('#questionModal').modal('show');
+            isModalOpen = false;
         });
 
-        // get level modal input and save username and level
-        $('#playButton').click(function () {
-            let username = $('#floatingInput').val();
-            if (username === "") {
-                alert("Please enter a username.");
-                return;
-            }
-            else if (username.length > 20) {
-                alert("Username must be less than 20 characters.");
-                return;
-            }
-
-            let level = $('input[name="vbtn-radio"]:checked').next().text();
-            if (level === "Easy") {
-                numGuesses = 7;
-            } else if (level === "Medium") {
-                numGuesses = 6;
-            } else if (level === "Hard") {
-                numGuesses = 5;
-            } else if (level === "Impossible") {
-                numGuesses = 3;
-            }
-            
-            // save username to leaderboard db if it doesn't exist and save level
+        $('#levelForm').on('submit', function (event) {
+            event.preventDefault();
             $.ajax({
-                type: "POST",
-                url: "/save_username",
-                data: {
-                    'username': username,
-                    'level': numGuesses
-                },
+                url: '/save_username',  // the endpoint
+                type: 'POST',  // http method
+                data: $(this).serialize(),  // data sent with the post request
                 success: function (response) {
-                    console.log(response);
+                    // handle the response from the server
+                },
+                error: function (error) {
+                    // handle errors
                 }
             });
-            
-            console.log("Username:", username);
-            console.log("Level:", level);
-            $('#levelModal').modal('hide');
-            $('#questionModal .modal-body h5').text(`Guess the Wordle in ${numGuesses} tries.`);
+        });
 
-            // Generate the HTML for the board
-            let html = '';
-            for (let i = 0; i < numGuesses; i++) {
-                html += `
-                <div class="d-flex justify-content-center">
-                    <form action="">
-                        <div class="row">
-                            <div class="col p-1">
-                                <input type="text" maxlength="1"
-                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                            </div>
-                            <div class="col p-1">
-                                <input type="text" maxlength="1"
-                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                            </div>
-                            <div class="col p-1">
-                                <input type="text" maxlength="1"
-                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                            </div>
-                            <div class="col p-1">
-                                <input type="text" maxlength=""
-                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                            </div>
-                            <div class="col p-1">
-                                <input type="text" maxlength="1"
-                                    class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder="" disabled readonly>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                `;
-            }
-
-            // Replace the contents of the form with the new HTML
-            $('#board').html(html);
+        $('#levelModal').on('hidden.bs.modal', function () {
+            $('#questionModal').modal('show');
         });
     });
 
+    // Setup
+    let guessableWords;
+    let answerWords;
+    let randomAnswer;
+
+    async function loadWords() {
+        // Fetch the guessable words
+        let response = await fetch('/guessable_words');
+        let data = await response.json();
+        guessableWords = data;
+        console.log('Guessable words:', guessableWords);
+
+        // Fetch the answer words
+        response = await fetch('/answer_words');
+        data = await response.json();
+        answerWords = data;
+        console.log('Answer words:', answerWords);
+
+        // Choose a random answer
+        let randomIndex = Math.floor(Math.random() * answerWords.length);
+        randomAnswer = answerWords[randomIndex];
+        console.log('Chosen Answer:', randomAnswer);
+    }
+
+    // fetches the words from word.db, places them into the guessableWords and answerWords arrays, and chooses a random answer
+    loadWords();
+
+    const numGuesses = 6;
     const numLetters = 5;
     let guesses = [];
     let currGuess = 0;
@@ -296,32 +217,34 @@
 
     function keyboardHandler(input) {
         // Check if the key is "Enter" or "Backspace"
-        // If any modal is open, ignore the key press
-        if ($('#levelModal').hasClass('show') || $('#questionModal').hasClass('show') || $('#leaderboardModal').hasClass('show') || $('#settingsModal').hasClass('show')) {
+        if (isModalOpen) {
             return;
         } else {
             if (input.key === "Enter") {
                 if (currGuess < numGuesses - 1) {
                     if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
-                        //currGuess++;
                         if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
                             console.log("Correct guess! The word was:", randomAnswer);
                             finalSubmit = true;
+                            updateColors();
                         } else {
                             console.log("It's a valid word, but not the correct answer.");
+                            updateColors();
                             currGuess++;
                         }
                     } else {
                         console.log("Invalid guess. Please enter a valid 5-letter word.");
                     }
-                } else {
+                } else { // This block of code runs whenever the user is on their last guess
                     if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                         if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
                             console.log("Correct guess! The word was:", randomAnswer);
                             finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
+                            updateColors();
                         } else {
-                            console.log("It's a valid word, but not the correct answer.");
+                            console.log("It's a valid word, but not the correct answer. User has submitted their last guess.");
                             finalSubmit = true;
+                            updateColors();
                         }
                     } else {
                         console.log("Invalid guess. Please enter a valid 5-letter word.");
@@ -354,8 +277,10 @@
                     if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
                         console.log("Correct guess! The word was:", randomAnswer);
                         finalSubmit = true;
+                        updateColors();
                     } else {
                         console.log("It's a valid word, but not the correct answer.");
+                        updateColors();
                         currGuess++;
                     }
                 } else {
@@ -366,9 +291,11 @@
                     if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
                         console.log("Correct guess! The word was:", randomAnswer);
                         finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
+                        updateColors();
                     } else {
                         console.log("It's a valid word, but not the correct answer.");
                         finalSubmit = true;
+                        updateColors();
                     }
                 } else {
                     console.log("Invalid guess. Please enter a valid 5-letter word.");
@@ -404,6 +331,65 @@
                 else {
                     //There's probably a better way to remove backspaced letters but this works for now
                     letterBoxes[i * numLetters + j].placeholder = "";
+                }
+            }
+        }
+    }
+
+    // Helper function to be used in updateColors()
+    // Accounts for duplicates in the guess and answer correctly(?)
+    // I don't see any issues after doing some testing so far lol
+    function determineColor(guess, j) {
+        var answer = randomAnswer.toLowerCase();
+        var letter = guess[j];
+        if (letter === answer[j]) {
+            return "bg-success"; // Green
+        } else if (answer.includes(letter)) { // Additional logic to account for duplicates
+            var nTarget = answer.split(letter).length - 1;
+            var nCorrect = 0; 
+            var nOccurrence = 0;
+
+            for (var i = 0; i < numLetters; i++) {
+                if (guess[i] === letter) {
+                    if (i <= j) {
+                        nOccurrence++;
+                    } else if (letter === answer[i]) {
+                        nCorrect++;
+                    }
+                }
+            }
+            if (nTarget - nCorrect - nOccurrence >= 0) {
+                return "bg-warning"; // Yellow
+            }
+        }
+        return "bg-danger"; // Grey
+    }
+
+    function updateColors() {
+        var guess = guesses[currGuess].toLowerCase();
+        var answer = randomAnswer.toLowerCase();
+
+        // Colors the Wordle tiles based on the correctness of the guess
+        for (var i = 0; i < numLetters; i++) {
+            var color = determineColor(guess, i);
+            var letterBox = document.getElementById("letter-" + currGuess + "-" + i);
+            letterBox.classList.remove("bg-dark", "bg-success", "bg-warning", "bg-danger");
+            letterBox.classList.add(color);
+        }
+
+        // Colors the keyboard buttons based on the correctness of the guess
+        var buttons = document.getElementsByClassName('letter-button');
+        for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            var letter = button.id.toLowerCase();
+
+            if (letter !== "enter" && letter !== "backspace" && guess.includes(letter)) {
+                if (button.classList.contains("btn-success")) {
+                    continue;
+                } else {
+                    var color = determineColor(guess, guess.indexOf(letter));
+                    button.classList.remove("btn-secondary", "btn-warning", "btn-danger");
+                    button.classList.add(color.replace("bg-", "btn-"));
                 }
             }
         }
