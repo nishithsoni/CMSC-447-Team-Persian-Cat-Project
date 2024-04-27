@@ -303,11 +303,29 @@
             if (input.key === "Enter") {
                 if (currGuess < numGuesses - 1) {
                     if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
-                        currGuess++;
+                        //currGuess++;
+                        if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
+                            console.log("Correct guess! The word was:", randomAnswer);
+                            finalSubmit = true;
+                        } else {
+                            console.log("It's a valid word, but not the correct answer.");
+                            currGuess++;
+                        }
+                    } else {
+                        console.log("Invalid guess. Please enter a valid 5-letter word.");
                     }
                 } else {
-                    finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
-                    console.log("User has submitted their final guess.");
+                    if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
+                        if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
+                            console.log("Correct guess! The word was:", randomAnswer);
+                            finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
+                        } else {
+                            console.log("It's a valid word, but not the correct answer.");
+                            finalSubmit = true;
+                        }
+                    } else {
+                        console.log("Invalid guess. Please enter a valid 5-letter word.");
+                    }
                 }
             } else if (input.key === "Backspace") {
                 if (currGuess < numGuesses - 1 || !finalSubmit) { // Checks if the player has submitted their last guess
@@ -333,11 +351,28 @@
             // Handle the "ENTER" button
             if (currGuess < numGuesses - 1) {
                 if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
-                    currGuess++;
+                    if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
+                        console.log("Correct guess! The word was:", randomAnswer);
+                        finalSubmit = true;
+                    } else {
+                        console.log("It's a valid word, but not the correct answer.");
+                        currGuess++;
+                    }
+                } else {
+                    console.log("Invalid guess. Please enter a valid 5-letter word.");
                 }
             } else {
-                finalSubmit = true;
-                console.log("User has submitted their final guess.");
+                if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
+                    if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
+                        console.log("Correct guess! The word was:", randomAnswer);
+                        finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
+                    } else {
+                        console.log("It's a valid word, but not the correct answer.");
+                        finalSubmit = true;
+                    }
+                } else {
+                    console.log("Invalid guess. Please enter a valid 5-letter word.");
+                }
             }
         } else if (button.classList.contains("backspace")) {
             // Handle the "BACKSPACE" button
@@ -373,7 +408,7 @@
             }
         }
     }
-    
+
     function testFunc(event) {
         //console.log("button pressed");
         console.log(event.currentTarget.textContent);
