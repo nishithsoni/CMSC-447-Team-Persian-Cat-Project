@@ -18,10 +18,10 @@
                         <label for="floatingInput">Username</label>
                     </div>
                 </div>
-                <div class="btn-group btn-group-lg gap-1 mb-3" role="group"
+                <div class="btn-group btn-group-lg gap-1 mb-5" role="group"
                     aria-label="Vertical radio toggle button group">
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="7 guesses" data-trigger="hover" for="vbtn-radio1">Easy</label>
+                    <label class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="7 Guesses" data-trigger="hover" for="vbtn-radio1">Easy</label>
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
                     <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
                     <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
@@ -37,52 +37,63 @@
 
 <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"">
-      <div class=" modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-3" id="exampleModalLabel">How To Play</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <h5>Guess the Wordle in {{ numGuesses }} tries.</h5>
-            <ul>
-                <li>Each guess must be a valid 5-letter word.</li>
-                <li>The color of the tiles will change to show how close your guess was to the word.</li>
-            </ul>
-            <h6>Examples</h6>
-            <p>W is in the word and in the correct spot.</p>
-            <p>I is in the word but in the wrong spot.</p>
-            <p>U is not in the word in any spot.</p>
+        <div class=" modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-3" id="exampleModalLabel">How To Play</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Guess the Wordle in {{ numGuesses }} tries.</h5>
+                <ul>
+                    <li>Each guess must be a valid 5-letter word.</li>
+                    <li>The color of the tiles will change to show how close your guess was to the word.</li>
+                </ul>
+                <h6>Examples</h6>
+                <p>W is in the word and in the correct spot.</p>
+                <p>I is in the word but in the wrong spot.</p>
+                <p>U is not in the word in any spot.</p>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="modal fade" id="leaderboardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"">
-      <div class=" modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-3" id="exampleModalLabel">Leaderboard</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+        <div class=" modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-3" id="exampleModalLabel">Leaderboard</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered"">
-      <div class=" modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-3" id="exampleModalLabel">Settings</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
+        <div class=" modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-3" id="exampleModalLabel">Settings</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Change Levels</h5>
+                <div class="btn-group btn-group-lg gap-1 mb-3" role="group"
+                    aria-label="Vertical radio toggle button group">
+                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-success" for="vbtn-radio1">Easy</label>
+                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
+                    <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
+                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
+                    <label class="btn btn-outline-danger" for="vbtn-radio3">Hard</label>
+                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="vbtn-radio4">Impossible</label>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div id="board">
@@ -160,7 +171,38 @@
 </div>
 
 <script>
-    var isModalOpen = false; // Set to false initially
+    let guessableWords;
+    let answerWords;
+    let randomAnswer;
+
+    // Read the guessable words from a text file
+    fetch('../static/guessable_words.txt')
+        .then(response => response.text())
+        .then(data => {
+            guessableWords = data.split('\n');
+            console.log('Guessable words:', guessableWords);
+        })
+        .catch(error => {
+            console.error('Error reading guessable words:', error);
+        });
+
+    // Read the answer words from a text file
+    fetch('../static/answer_words.txt')
+        .then(response => response.text())
+        .then(data => {
+            answerWords = data.split('\n');
+            console.log('Answer words:', answerWords);
+            // Choose a random answer
+            let randomIndex = Math.floor(Math.random() * answerWords.length);
+            randomAnswer = answerWords[randomIndex];
+            console.log('Chosen Answer:', randomAnswer);
+        })
+        .catch(error => {
+            console.error('Error reading answer words:', error);
+        });
+    
+    let numGuesses = 7;
+
     $(document).ready(function () {
         $('#levelModal').modal('show');
 
@@ -252,16 +294,6 @@
 
             // Replace the contents of the form with the new HTML
             $('#board').html(html);
-                    // handle the response from the server
-                },
-                error: function (error) {
-                    // handle errors
-                }
-            });
-        });
-
-        $('#levelModal').on('hidden.bs.modal', function () {
-            $('#questionModal').modal('show');
         });
     });
 
@@ -289,6 +321,18 @@
                                 letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
                                 letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
                                 letterBoxes[currGuess * numLetters + i].classList.add("border-success");
+
+                                // change keyboard letter color
+                                let letterButtons = document.getElementsByClassName("letter-button");
+                                for (let j = 0; j < letterButtons.length; j++) {
+                                    if (letterButtons[j].textContent.toLowerCase() === guesses[currGuess][i]) {
+                                        // remove all possible colors
+                                        letterButtons[j].classList.remove("btn-secondary");
+                                        letterButtons[j].classList.remove("btn-warning");
+                                        letterButtons[j].classList.remove("btn-danger");
+                                        letterButtons[j].classList.add("btn-success");
+                                    }
+                                }
                             }
 
                             let alert = $('<div class="alert alert-success fade show text-center" role="alert">')
@@ -314,6 +358,18 @@
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-success");
 
+                                    // change keyboard letter color
+                                    let letterButtons = document.getElementsByClassName("letter-button");
+                                    for (let j = 0; j < letterButtons.length; j++) {
+                                        if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
+                                            // remove all possible colors
+                                            letterButtons[j].classList.remove("btn-secondary");
+                                            letterButtons[j].classList.remove("btn-warning");
+                                            letterButtons[j].classList.remove("btn-danger");
+                                            letterButtons[j].classList.add("btn-success");
+                                        }
+                                    }
+
                                     // Remove the matched letter from the answer copy
                                     answerCopy[i] = null;
                                 }
@@ -325,16 +381,37 @@
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-warning");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-warning");
 
+                                    // change keyboard letter color
+                                    let letterButtons = document.getElementsByClassName("letter-button");
+
+                                    for (let j = 0; j < letterButtons.length; j++) {
+                                        if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
+                                            // if in answer but not in correct spot, change to yellow
+                                            if (!letterButtons[j].classList.contains("btn-success")) {
+                                                letterButtons[j].classList.remove("btn-success");
+                                                letterButtons[j].classList.add("btn-warning");
+                                            }
+                                        }
+                                    }
+
                                     // Remove the matched letter from the answer copy
                                     answerCopy[answerCopy.indexOf(guess[i])] = null;
                                 } else if (guess[i] !== answer[i]) {
                                     letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
-                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-secondary");
-                                    letterBoxes[currGuess * numLetters + i].classList.add("border-secondary");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-danger");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("border-danger");
+
+                                    // change keyboard letter color
+                                    let letterButtons = document.getElementsByClassName("letter-button");
+
+                                    for (let j = 0; j < letterButtons.length; j++) {
+                                        if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
+                                            letterButtons[j].classList.remove("btn-secondary");
+                                            letterButtons[j].classList.add("btn-danger");
+                                        }
+                                    }
                                 }
                             }
-                            console.log("It's a valid word, but not the correct answer.");
-                            updateColors();
                             currGuess++;
                         }
                     } 
@@ -360,23 +437,6 @@
                             }, 1500);
                         }
                     } 
-                    } else {
-                        console.log("Invalid guess. Please enter a valid 5-letter word.");
-                    }
-                } else { // This block of code runs whenever the user is on their last guess
-                    if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
-                        if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
-                            console.log("Correct guess! The word was:", randomAnswer);
-                            finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
-                            updateColors();
-                        } else {
-                            console.log("It's a valid word, but not the correct answer. User has submitted their last guess.");
-                            finalSubmit = true;
-                            updateColors();
-                        }
-                    } else {
-                        console.log("Invalid guess. Please enter a valid 5-letter word.");
-                    }
                 }
             } else if (input.key === "Backspace") {
                 if (currGuess < numGuesses - 1 || !finalSubmit) { // Checks if the player has submitted their last guess
