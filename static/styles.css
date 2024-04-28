@@ -10,12 +10,8 @@
   height: 52px;
 }
 
-.keyboard-letters {
-}
-
 .keyboard-letters button {
   height: 42px;
-
   padding: 8px;
   table-layout: fixed;
 }

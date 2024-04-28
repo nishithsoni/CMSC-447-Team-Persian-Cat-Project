@@ -18,18 +18,18 @@
                         <label for="floatingInput">Username</label>
                     </div>
                 </div>
-                <div class="btn-group btn-group-lg gap-1 mb-5" role="group"
-                    aria-label="Vertical radio toggle button group">
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="7 Guesses" data-trigger="hover" for="vbtn-radio1">Easy</label>
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
-                    <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="vbtn-radio3">Hard</label>
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="vbtn-radio4">Impossible</label>
+                <div class="btn-group btn-group-lg gap-1 mb-3" role="group"
+                    aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-success" for="btnradio1">Easy</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-warning" for="btnradio2">Medium</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-outline-danger" for="btnradio3">Hard</label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio4">Impossible</label>
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary" id="playButton">Play</button>
+                <button type="submit" class="btn btn-lg btn-primary mb-3" id="playButton">Play</button>
             </div>
         </div>
     </div>
@@ -48,9 +48,12 @@
                     <li>Each guess must be a valid 5-letter word.</li>
                     <li>The color of the tiles will change to show how close your guess was to the word.</li>
                 </ul>
-                <h6>Examples</h6>
+                <h6 class="fw-bolder">Examples</h6>
+                <img src="../static/green_example.png" class="img-fluid mb-1" "green_example">
                 <p>W is in the word and in the correct spot.</p>
+                <img src="../static/yellow_example.png" class="img-fluid mb-1" alt="yellow_example">
                 <p>I is in the word but in the wrong spot.</p>
+                <img src="../static/red_example.png" class="img-fluid mb-1" alt="red_example">
                 <p>U is not in the word in any spot.</p>
             </div>
         </div>
@@ -78,19 +81,8 @@
                 <h1 class="modal-title fs-3" id="exampleModalLabel">Settings</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <h5>Change Levels</h5>
-                <div class="btn-group btn-group-lg gap-1 mb-3" role="group"
-                    aria-label="Vertical radio toggle button group">
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" for="vbtn-radio1">Easy</label>
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
-                    <label class="btn btn-outline-warning" for="vbtn-radio2">Medium</label>
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="vbtn-radio3">Hard</label>
-                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio4" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="vbtn-radio4">Impossible</label>
-                </div>
+            <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                
             </div>
         </div>
     </div>
@@ -171,9 +163,14 @@
 </div>
 
 <script>
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
     let guessableWords;
     let answerWords;
     let randomAnswer;
+    let numGuesses = 6;
+    let username = "";
 
     // Read the guessable words from a text file
     fetch('../static/guessable_words.txt')
@@ -200,8 +197,6 @@
         .catch(error => {
             console.error('Error reading answer words:', error);
         });
-    
-    let numGuesses = 7;
 
     $(document).ready(function () {
         $('#levelModal').modal('show');
@@ -220,7 +215,7 @@
 
         // get level modal input and save username and level
         $('#playButton').click(function () {
-            let username = $('#floatingInput').val();
+            username = $('#floatingInput').val();
             if (username === "") {
                 alert("Please enter a username.");
                 return;
@@ -230,7 +225,7 @@
                 return;
             }
 
-            let level = $('input[name="vbtn-radio"]:checked').next().text();
+            let level = $('input[name="btnradio"]:checked').next().text();
             if (level === "Easy") {
                 numGuesses = 7;
             } else if (level === "Medium") {
@@ -247,7 +242,6 @@
                 url: "/save_username",
                 data: {
                     'username': username,
-                    'level': numGuesses
                 },
                 success: function (response) {
                     console.log(response);
@@ -315,7 +309,6 @@
                 if (currGuess < numGuesses) {
                     if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                         if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
-                            // go through each letter and change the color to green
                             for (let i = 0; i < numLetters; i++) {
                                 let letterBoxes = document.getElementsByClassName("square-input");
                                 letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
@@ -344,6 +337,23 @@
                                 alert.alert('close');
                             }, 1500);
                             finalSubmit = true;
+
+                            // update leaderboard
+                            $.ajax({
+                                type: "POST",
+                                url: "/update_leaderboard",
+                                data: {
+                                    'username': username,
+                                },
+                                success: function (response) {
+                                    console.log(response);
+                                }
+                            });
+
+                            setTimeout(function() {
+                                location.reload();
+                            }, 3000);
+                            
                         } else {
                             // go through each letter input and match with the answer and change input box colors
                             let answer = randomAnswer.toLowerCase();
@@ -413,6 +423,21 @@
                                 }
                             }
                             currGuess++;
+                            if (currGuess === numGuesses) {
+                                finalSubmit = true;
+                                // alert user of correct answer
+                                let alert = $('<div class="alert alert-light fade show text-center" role="alert">')
+                                    .text(randomAnswer);
+                                
+                                $('body').prepend(alert);
+                                setTimeout(function() {
+                                    alert.alert('close');
+                                }, 3000);
+                                
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 3000);
+                            }
                         }
                     } 
                     else {
@@ -460,38 +485,142 @@
         // Check if the button is the "ENTER" button
         if (button.textContent === "ENTER") {
             // Handle the "ENTER" button
-            if (currGuess < numGuesses - 1) {
+            if (currGuess < numGuesses) {
                 if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
                     if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
-                        console.log("Correct guess! The word was:", randomAnswer);
-                        finalSubmit = true;
-                    } else {
-                        console.log("It's a valid word, but not the correct answer.");
-                        currGuess++;
-                    }
-                } else {
-                    console.log("Invalid guess. Please enter a valid 5-letter word.");
+                        for (let i = 0; i < numLetters; i++) {
+                                let letterBoxes = document.getElementsByClassName("square-input");
+                                letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
+                                letterBoxes[currGuess * numLetters + i].classList.add("border-success");
+
+                                // change keyboard letter color
+                                let letterButtons = document.getElementsByClassName("letter-button");
+                                for (let j = 0; j < letterButtons.length; j++) {
+                                    if (letterButtons[j].textContent.toLowerCase() === guesses[currGuess][i]) {
+                                        // remove all possible colors
+                                        letterButtons[j].classList.remove("btn-secondary");
+                                        letterButtons[j].classList.remove("btn-warning");
+                                        letterButtons[j].classList.remove("btn-danger");
+                                        letterButtons[j].classList.add("btn-success");
+                                    }
+                                }
+                            }
+
+                            let alert = $('<div class="alert alert-success fade show text-center" role="alert">')
+                                .text('Congratulations!');
+                            
+                            // Add the alert to the DOM
+                            $('body').prepend(alert);
+                            setTimeout(function() {
+                                alert.alert('close');
+                            }, 1500);
+                            finalSubmit = true;
+                        }
+                        else {
+                            // go through each letter input and match with the answer and change input box colors
+                            let answer = randomAnswer.toLowerCase();
+                            let guess = guesses[currGuess].toLowerCase();
+                            let letterBoxes = document.getElementsByClassName("square-input");
+
+                            let answerCopy = [...answer];
+
+                            for (let i = 0; i < numLetters; i++) {
+                                if (guess[i] === answer[i]) {
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("border-success");
+
+                                    // change keyboard letter color
+                                    let letterButtons = document.getElementsByClassName("letter-button");
+                                    for (let j = 0; j < letterButtons.length; j++) {
+                                        if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
+                                            // remove all possible colors
+                                            letterButtons[j].classList.remove("btn-secondary");
+                                            letterButtons[j].classList.remove("btn-warning");
+                                            letterButtons[j].classList.remove("btn-danger");
+                                            letterButtons[j].classList.add("btn-success");
+                                        }
+                                    }
+
+                                    // Remove the matched letter from the answer copy
+                                    answerCopy[i] = null;
+                                }
+                            }
+
+                            for (let i = 0; i < numLetters; i++) {
+                                if (guess[i] !== answer[i] && answerCopy.includes(guess[i])) {
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-warning");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("border-warning");
+
+                                    // change keyboard letter color
+                                    let letterButtons = document.getElementsByClassName("letter-button");
+
+                                    for (let j = 0; j < letterButtons.length; j++) {
+                                        if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
+                                            // if in answer but not in correct spot, change to yellow
+                                            if (!letterButtons[j].classList.contains("btn-success")) {
+                                                letterButtons[j].classList.remove("btn-success");
+                                                letterButtons[j].classList.add("btn-warning");
+                                            }
+                                        }
+                                    }
+
+                                    // Remove the matched letter from the answer copy
+                                    answerCopy[answerCopy.indexOf(guess[i])] = null;
+                                } 
+                                else if (guess[i] !== answer[i]) {
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("bg-danger");
+                                    letterBoxes[currGuess * numLetters + i].classList.add("border-danger");
+
+                                    // change keyboard letter color
+                                    let letterButtons = document.getElementsByClassName("letter-button");
+
+                                    for (let j = 0; j < letterButtons.length; j++) {
+                                        if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
+                                            letterButtons[j].classList.remove("btn-secondary");
+                                            letterButtons[j].classList.add("btn-danger");
+                                        }
+                                    }
+                                }
+                            }
+                            currGuess++;
+                        }
                 }
-            } else {
-                if (guesses[currGuess].length === numLetters && guessableWords.includes(guesses[currGuess])) {
-                    if (guesses[currGuess].toLowerCase() == randomAnswer.toLowerCase()) {
-                        console.log("Correct guess! The word was:", randomAnswer);
-                        finalSubmit = true; // Set finalSubmit to true when the player has submitted their last guess
-                    } else {
-                        console.log("It's a valid word, but not the correct answer.");
-                        finalSubmit = true;
+                else {
+                    if (guesses[currGuess].length < numLetters) {
+                        let alert = $('<div class="alert alert-light fade show text-center" role="alert">')
+                            .text('Not enough letters.');
+
+                        // Add the alert to the DOM
+                        $('body').prepend(alert);
+                        // Remove the alert after 3 seconds
+                        setTimeout(function() {
+                            alert.alert('close');
+                        }, 1500);
                     }
-                } else {
-                    console.log("Invalid guess. Please enter a valid 5-letter word.");
+                    else if (!guessableWords.includes(guesses[currGuess])) {
+                        let alert = $('<div class="alert alert-light fade show text-center" role="alert">')
+                            .text('Not in word list.');
+                        
+                        $('body').prepend(alert);
+                        setTimeout(function() {
+                            alert.alert('close');
+                        }, 1500);
+                    }
                 }
             }
-        } else if (button.classList.contains("backspace")) {
+        } 
+        else if (button.classList.contains("backspace")) {
             // Handle the "BACKSPACE" button
             if (currGuess < numGuesses - 1 || !finalSubmit) {
                 guesses[currGuess] = guesses[currGuess].slice(0, -1);
             }
             updateLetters();
-        } else {
+        } 
+        else {
             // Handle other buttons
             inputLetter(button.textContent.toLowerCase());
         }
@@ -534,8 +663,6 @@
         //letterButtons[i].onclick = testFunc;
         letterButtons[i].addEventListener("click", buttonHandler);
     }
-
-
 </script>
 
 {% include "footer.html" %}
