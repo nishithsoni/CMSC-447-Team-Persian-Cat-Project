@@ -179,7 +179,7 @@
     fetch('../static/guessable_words.txt')
         .then(response => response.text())
         .then(data => {
-            guessableWords = data.split('\n');
+            guessableWords = data.split('\n').map(word => word.toLowerCase());
             console.log('Guessable words:', guessableWords);
         })
         .catch(error => {
@@ -190,7 +190,7 @@
     fetch('../static/answer_words.txt')
         .then(response => response.text())
         .then(data => {
-            answerWords = data.split('\n');
+            answerWords = data.split('\n').map(word => word.toLowerCase());
             console.log('Answer words:', answerWords);
             // Choose a random answer
             let randomIndex = Math.floor(Math.random() * answerWords.length);
