@@ -227,11 +227,11 @@
 
             let level = $('input[name="btnradio"]:checked').next().text();
             if (level === "Easy") {
-                numGuesses = 7;
-            } else if (level === "Medium") {
                 numGuesses = 6;
-            } else if (level === "Hard") {
+            } else if (level === "Medium") {
                 numGuesses = 5;
+            } else if (level === "Hard") {
+                numGuesses = 4;
             } else if (level === "Impossible") {
                 numGuesses = 3;
             }
@@ -398,7 +398,7 @@
                                         if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
                                             // if in answer but not in correct spot, change to yellow
                                             if (!letterButtons[j].classList.contains("btn-success")) {
-                                                letterButtons[j].classList.remove("btn-success");
+                                                letterButtons[j].classList.remove("btn-secondary");
                                                 letterButtons[j].classList.add("btn-warning");
                                             }
                                         }
@@ -416,8 +416,10 @@
 
                                     for (let j = 0; j < letterButtons.length; j++) {
                                         if (letterButtons[j].textContent.toLowerCase() === guess[i]) {
-                                            letterButtons[j].classList.remove("btn-secondary");
-                                            letterButtons[j].classList.add("btn-danger");
+                                            if (!letterButtons[j].classList.contains("btn-success") && !letterButtons[j].classList.contains("btn-warning")){
+                                                letterButtons[j].classList.remove("btn-secondary");
+                                                letterButtons[j].classList.add("btn-danger");
+                                            }
                                         }
                                     }
                                 }
