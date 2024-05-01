@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, session, json, jsonify
+import http.client
 import sqlite3
 
 LEADERBOARD = 'leaderboard.db'
@@ -47,6 +48,44 @@ def get_leaderboard():
     conn.close()
     return jsonify(leaderboard_data)
 
+@app.route('/send_leaderboard', methods=['POST'])
+def send_leaderboard():
+    try:
+        conn = sqlite3.connect(LEADERBOARD)
+        c = conn.cursor()
+        c.execute("SELECT * FROM leaderboard ORDER BY num_solved DESC LIMIT 5")
+        leaderboard_data = c.fetchall()
+        conn.close()
+
+        # Prepare the data for the API request
+        data = {
+            "data": [
+                {
+                    "Group": "Team Persian Cat",
+                    "Title": "Top 5 Scores"
+                }
+            ]
+        }
+        for user in leaderboard_data:
+            data["data"][0][user[0]] = user[1]
+
+        # Print the data to the console
+        print(data)
+
+        # Send the data to the professor's API
+        conn = http.client.HTTPSConnection("eope3o6d7z7e2cc.m.pipedream.net")
+        # this is my custom Pipedream workspace URI for testing purposes: https://eofe04u8uwn1bwi.m.pipedream.net
+        headers = { 'Content-Type': 'application/json' }
+        conn.request("POST", "/", json.dumps(data), headers)
+        response = conn.getresponse()
+
+        if response.status == 200:
+            return 'Success!'
+        else:
+            return 'Failed to send leaderboard data', 500
+    except Exception as e:
+        print(e)
+        return 'An error occurred', 500
 
 if __name__ == "__main__":
     app.run(debug=True)
