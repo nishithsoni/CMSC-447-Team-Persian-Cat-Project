@@ -64,9 +64,10 @@
     <div class="modal-dialog modal-dialog-centered"">
         <div class=" modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-3" id="exampleModalLabel">Leaderboard</h1>
+            <h1 class="modal-title fs-3" id="exampleModalLabel" style="text-align: center;">Global Leaderboard</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div id="leaderboardData" style="padding-top: 20px;"></div>
         <div class="modal-body">
 
         </div>
@@ -218,6 +219,29 @@
             $('#questionModal').modal('show');
         });
 
+        $(document).ready(function () {
+            $('#leaderboardModal').on('show.bs.modal', function () {
+                $.ajax({
+                    url: '/get_leaderboard',
+                    type: 'GET',
+                    success: function (data) {
+                        // Create HTML for the leaderboard
+                        var leaderboardHtml = '<table style="width: 100%; text-align: center; margin: 0 auto;">';
+                        for (var i = 0; i < data.length; i++) {
+                            leaderboardHtml += '<tr><td>#' + (i + 1) + '</td><td>' + data[i][0] + '</td><td>' + data[i][1] + '</td></tr>';
+                            if (i < data.length - 1) {
+                                leaderboardHtml += '<tr><td colspan="3"><hr></td></tr>';
+                            }
+                        }
+                        leaderboardHtml += '</table>';
+
+                        // Update the HTML of the leaderboardData element with the leaderboard data
+                        $('#leaderboardData').html(leaderboardHtml);
+                    }
+                });
+            });
+        });
+
         // get level modal input and save username and level
         $('#playButton').click(function () {
             username = $('#floatingInput').val();
@@ -366,9 +390,9 @@
                                 }
                             });
 
-                            setTimeout(function () {
-                                location.reload();
-                            }, 3000);
+                            //setTimeout(function () {
+                            //    location.reload();
+                            //}, 3000);
 
                         } else {
                             // go through each letter input and match with the answer and change input box colors
@@ -452,9 +476,9 @@
                                     alert.alert('close');
                                 }, 3000);
 
-                                setTimeout(function () {
-                                    location.reload();
-                                }, 3000);
+                                //setTimeout(function () {
+                                //    location.reload();
+                                //}, 3000);
                             }
                         }
                     }
