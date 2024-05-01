@@ -81,8 +81,11 @@
                 <h1 class="modal-title fs-3" id="exampleModalLabel">Settings</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body d-flex flex-column align-items-center justify-content-center">
-                
+            <div class="modal-body d-flex justify-content-between">
+                <label class="form-check-label" for="darkModeSwitch">Dark Mode</label>
+                <div class="form-check form-switch form-check-reverse">
+                    <input class="form-check-input" type="checkbox" id="darkModeSwitch" checked>
+                </div>
             </div>
         </div>
     </div>
@@ -171,6 +174,7 @@
     let randomAnswer;
     let numGuesses = 6;
     let username = "";
+    let currGuess = 0;
 
     // Read the guessable words from a text file
     fetch('../static/guessable_words.txt')
@@ -199,6 +203,35 @@
         });
 
     $(document).ready(function () {
+
+        $('#darkModeSwitch').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('html').attr('data-bs-theme', 'dark');
+            if ($('.modal-symbol').hasClass('btn-light')) {
+                $('.modal-symbol').removeClass('btn-light').addClass('btn-dark');
+            }
+            letterBoxes = document.getElementsByClassName("square-input");
+            for (let i = 0; i < letterBoxes.length; i++) {
+                if (letterBoxes[i].classList.contains("bg-light")) {
+                    letterBoxes[i].classList.remove("bg-light");
+                    letterBoxes[i].classList.add("bg-dark");
+                }
+            }
+        } else {
+            $('html').attr('data-bs-theme', 'light');
+            if ($('.modal-symbol').hasClass('btn-dark')) {
+                $('.modal-symbol').removeClass('btn-dark').addClass('btn-light');
+            }
+            letterBoxes = document.getElementsByClassName("square-input");
+            for (let i = 0; i < letterBoxes.length; i++) {
+                if (letterBoxes[i].classList.contains("bg-dark")) {
+                    letterBoxes[i].classList.remove("bg-dark");
+                    letterBoxes[i].classList.add("bg-light");
+                }
+            }
+        }
+    });
+
         $('#levelModal').modal('show');
 
         // dont let close modal until username is entered, show alert
@@ -293,7 +326,6 @@
 
     const numLetters = 5;
     let guesses = [];
-    let currGuess = 0;
     let finalSubmit = false; // A variable to check when the player has submitted their last guess
     for (let i = 0; i < numGuesses; i++) {
         guesses.push("");
@@ -312,6 +344,7 @@
                             for (let i = 0; i < numLetters; i++) {
                                 let letterBoxes = document.getElementsByClassName("square-input");
                                 letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                 letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
                                 letterBoxes[currGuess * numLetters + i].classList.add("border-success");
 
@@ -365,6 +398,7 @@
                             for (let i = 0; i < numLetters; i++) {
                                 if (guess[i] === answer[i]) {
                                     letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-success");
 
@@ -388,6 +422,7 @@
                             for (let i = 0; i < numLetters; i++) {
                                 if (guess[i] !== answer[i] && answerCopy.includes(guess[i])) {
                                     letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-warning");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-warning");
 
@@ -408,6 +443,7 @@
                                     answerCopy[answerCopy.indexOf(guess[i])] = null;
                                 } else if (guess[i] !== answer[i]) {
                                     letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-danger");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-danger");
 
@@ -493,6 +529,7 @@
                         for (let i = 0; i < numLetters; i++) {
                                 let letterBoxes = document.getElementsByClassName("square-input");
                                 letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                 letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
                                 letterBoxes[currGuess * numLetters + i].classList.add("border-success");
 
@@ -530,6 +567,7 @@
                             for (let i = 0; i < numLetters; i++) {
                                 if (guess[i] === answer[i]) {
                                     letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-success");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-success");
 
@@ -553,6 +591,7 @@
                             for (let i = 0; i < numLetters; i++) {
                                 if (guess[i] !== answer[i] && answerCopy.includes(guess[i])) {
                                     letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-warning");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-warning");
 
@@ -574,6 +613,7 @@
                                 } 
                                 else if (guess[i] !== answer[i]) {
                                     letterBoxes[currGuess * numLetters + i].classList.remove("bg-dark");
+                                    letterBoxes[currGuess * numLetters + i].classList.remove("bg-light");
                                     letterBoxes[currGuess * numLetters + i].classList.add("bg-danger");
                                     letterBoxes[currGuess * numLetters + i].classList.add("border-danger");
 
