@@ -601,7 +601,7 @@
                                 finalSubmit = true;
                                 // alert user of correct answer
                                 let alert = $('<div class="alert alert-light fade show text-center" role="alert">')
-                                    .text(randomAnswer);
+                                    .text('The correct word was: ' + randomAnswer);
 
                                 $('body').prepend(alert);
                                 setTimeout(function () {
