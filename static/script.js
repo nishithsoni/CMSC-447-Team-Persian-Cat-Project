@@ -1,4 +1,11 @@
 const numLetters = 5; // The number of letters in the word
+const numGuessesOptions = {
+    "Easy": 6,
+    "Medium": 5,
+    "Hard": 4,
+    "Impossible": 3
+};
+
 let guessableWords; // An array to store the guessable words
 let answerWords; // An array to store the answer words
 let randomAnswer; // The randomly chosen answer word
@@ -33,8 +40,8 @@ fetch('../static/answer_words.txt')
         console.error('Error reading answer words:', error);
     });
 
+    
 $(document).ready(function () {
-
     // Dark mode switch
     $('#darkModeSwitch').on('change', function() {
         if ($(this).is(':checked')) {
@@ -114,15 +121,7 @@ $(document).ready(function () {
         }
 
         let level = $('input[name="btnradio"]:checked').next().text();
-        if (level === "Easy") {
-            numGuesses = 6;
-        } else if (level === "Medium") {
-            numGuesses = 5;
-        } else if (level === "Hard") {
-            numGuesses = 4;
-        } else if (level === "Impossible") {
-            numGuesses = 3;
-        }
+        numGuesses = numGuessesOptions[level];
 
         // save username to leaderboard db if it doesn't exist and save level
         $.ajax({

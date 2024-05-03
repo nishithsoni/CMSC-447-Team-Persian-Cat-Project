@@ -193,31 +193,13 @@
         <form action="">
             {% for i in range(numGuesses) %}
             <div class="row">
+                {% for j in range(5) %}
                 <div class="col p-1">
                     <input type="text" maxlength="1"
                         class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder=""
                         disabled readonly>
                 </div>
-                <div class="col p-1">
-                    <input type="text" maxlength="1"
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder=""
-                        disabled readonly>
-                </div>
-                <div class="col p-1">
-                    <input type="text" maxlength="1"
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder=""
-                        disabled readonly>
-                </div>
-                <div class="col p-1">
-                    <input type="text" maxlength=""
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder=""
-                        disabled readonly>
-                </div>
-                <div class="col p-1">
-                    <input type="text" maxlength="1"
-                        class="form-control shadow-none text-uppercase text-center bg-dark square-input" placeholder=""
-                        disabled readonly>
-                </div>
+                {% endfor %}
             </div>
             {% endfor %}
         </form>
